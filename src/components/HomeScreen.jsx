@@ -1446,43 +1446,6 @@ export default function HomeScreen({ onLogout }) {
               ))}
             </div>
 
-            {/* Chat Input Bar */}
-            <form onSubmit={handleSendChat} className="ai-chat-input-bar">
-              <button 
-                type="button" 
-                className="btn-ai-icon-tool"
-                title="Attach Document / Receipt"
-                onClick={() => triggerToast('Receipt attached for AI auto-logging')}
-              >
-                <Paperclip size={18} />
-              </button>
-
-              <input 
-                type="text" 
-                className="ai-chat-input-field"
-                placeholder="Ask Gigi to log sales, analyze cash flow, or run actions..."
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-              />
-
-              <button 
-                type="button" 
-                className="btn-ai-icon-tool"
-                title="Voice Input"
-                onClick={() => triggerToast('Voice recording active...')}
-              >
-                <Mic size={18} />
-              </button>
-
-              <button 
-                type="submit" 
-                className="btn-ai-send"
-                title="Send instruction to Gigi"
-              >
-                <Send size={15} />
-              </button>
-            </form>
-
           </div>
         )}
 
@@ -1992,6 +1955,47 @@ export default function HomeScreen({ onLogout }) {
           </button>
 
         </nav>
+      )}
+
+      {/* FIXED BOTTOM CHAT TYPE BAR (Always Fixed Below Phone Screen on GChat) */}
+      {activeTab === 'gchat' && (
+        <div className="ai-chat-fixed-footer">
+          <form onSubmit={handleSendChat} className="ai-chat-input-bar">
+            <button 
+              type="button" 
+              className="btn-ai-icon-tool"
+              title="Attach Document / Receipt"
+              onClick={() => triggerToast('Receipt attached for AI auto-logging')}
+            >
+              <Paperclip size={18} />
+            </button>
+
+            <input 
+              type="text" 
+              className="ai-chat-input-field"
+              placeholder="Ask Gigi to log sales, analyze cash flow, or run actions..."
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+            />
+
+            <button 
+              type="button" 
+              className="btn-ai-icon-tool"
+              title="Voice Input"
+              onClick={() => triggerToast('Voice recording active...')}
+            >
+              <Mic size={18} />
+            </button>
+
+            <button 
+              type="submit" 
+              className="btn-ai-send"
+              title="Send instruction to Gigi"
+            >
+              <Send size={15} />
+            </button>
+          </form>
+        </div>
       )}
 
     </div>
