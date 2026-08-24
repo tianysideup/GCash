@@ -1425,6 +1425,16 @@ export default function HomeScreen({ onLogout }) {
               </div>
             </div>
 
+            {/* Separator Before GChat Agent Content */}
+            <div className="gchat-session-divider">
+              <div className="gchat-divider-line" />
+              <span className="gchat-divider-pill">
+                <Sparkles size={11} color="var(--gcash-blue)" />
+                <span>Today • Gigi Negosyo Copilot</span>
+              </span>
+              <div className="gchat-divider-line" />
+            </div>
+
             {/* Message Stream */}
             <div className="ai-chat-messages">
               {chatMessages.map((msg) => (

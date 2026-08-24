@@ -2747,6 +2747,37 @@ body {
   background: #F8FAFC;
 }
 
+/* Session / Date Separator before GChat Agent Stream */
+.gchat-session-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0 2px;
+  width: 100%;
+}
+
+.gchat-divider-line {
+  flex: 1;
+  height: 1px;
+  background: #E2E8F0;
+}
+
+.gchat-divider-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #64748B;
+  background: #FFFFFF;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid #E2E8F0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
 /* User Message */
 .chat-msg-user {
   align-self: flex-end;
