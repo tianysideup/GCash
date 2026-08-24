@@ -62,7 +62,10 @@ import {
   HelpCircle,
   Check,
   Copy,
-  Camera
+  Camera,
+  Fingerprint,
+  Database,
+  Search
 } from 'lucide-react';
 import gcashMainLogo from '../assets/gcash-main.png';
 import gcashPassportLogo from '../assets/gcash-passport.png';
@@ -224,11 +227,33 @@ export default function HomeScreen({ onLogout }) {
       sender: 'ai',
       text: "Great news! Based on your consistent daily turnover (₱6,300 today) and 100% on-time supplier settlements, you are pre-qualified for an instant credit upgrade from ₱20,000 to ₱35,000.",
       hasThought: true,
+      thoughtStatus: "Working on it — contacting agencies securely...",
       thoughtSteps: [
-        "Queried transaction ledger (₱6,300 gross sales, ₱4,000 expense)",
-        "Calculated Negosyo Health score: Strong (12% MoM growth)",
-        "Checked credit line: ₱15,831.00 / ₱20,000 (79% utilization)",
-        "Pre-approved credit boost ceiling: ₱35,000.00"
+        {
+          id: 'step-1',
+          iconType: 'fingerprint',
+          title: 'Verifying your identity',
+          subtitle: 'Identity confirmed • member matched',
+          badgeText: 'PHILSYS EVERIFY',
+          isDone: true
+        },
+        {
+          id: 'step-2',
+          iconType: 'database',
+          title: 'Connecting to your member records',
+          subtitle: 'Member 34-2258901-5 • Active',
+          badgeText: 'SSS',
+          isDone: true
+        },
+        {
+          id: 'step-3',
+          iconType: 'search',
+          title: 'Reading employer contribution postings',
+          subtitle: 'Working...',
+          badgeText: 'SSS',
+          isDone: false,
+          isLoading: true
+        }
       ],
       hasAction: true,
       actionTitle: "Pre-Approved Credit Boost",
@@ -257,10 +282,32 @@ export default function HomeScreen({ onLogout }) {
         sender: 'ai',
         text: `I've analyzed "${currentInput}". Your Negosyo Passport has been updated and the action has been scheduled automatically.`,
         hasThought: true,
+        thoughtStatus: "Working on it — connecting to business ledger securely...",
         thoughtSteps: [
-          "Parsed merchant prompt via Agentic Planner",
-          "Synchronized ledger with GCash Business backend",
-          "Generated verified compliance receipt"
+          {
+            id: 's-1',
+            iconType: 'fingerprint',
+            title: 'Verifying merchant authorization',
+            subtitle: 'Identity confirmed • GNP-2026-8891 matched',
+            badgeText: 'PHILSYS EVERIFY',
+            isDone: true
+          },
+          {
+            id: 's-2',
+            iconType: 'database',
+            title: 'Connecting to real-time sales ledger',
+            subtitle: '₱6,300 gross turnover • 100% verified',
+            badgeText: 'GCASH BUSINESS',
+            isDone: true
+          },
+          {
+            id: 's-3',
+            iconType: 'search',
+            title: 'Optimizing Negosyo credit profile',
+            subtitle: 'Credit line boost calculated & approved',
+            badgeText: 'GLOAN ENGINE',
+            isDone: true
+          }
         ],
         timestamp: 'Just now'
       };
@@ -1390,28 +1437,81 @@ export default function HomeScreen({ onLogout }) {
                     <div>{msg.text}</div>
                   ) : (
                     <>
-                      {/* Thought process card if present */}
+                      {/* Professional Agentic Reasoning Stepper Card */}
                       {msg.hasThought && (
                         <div className="agent-thought-card">
                           <div 
                             className="thought-header"
                             onClick={() => setThinkingExpanded(!thinkingExpanded)}
                           >
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                              <Zap size={13} color="#005CEE" />
-                              <span>Gigi Agentic Reasoning ({msg.thoughtSteps.length} steps)</span>
-                            </span>
-                            {thinkingExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                            <div className="thought-header-left">
+                              {/* Multi-color circular ring loader */}
+                              <svg width="20" height="20" viewBox="0 0 24 24" className="agentic-spinner-ring">
+                                <circle cx="12" cy="12" r="9" fill="none" stroke="#4285F4" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="0" strokeLinecap="round" />
+                                <circle cx="12" cy="12" r="9" fill="none" stroke="#EA4335" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-14" strokeLinecap="round" />
+                                <circle cx="12" cy="12" r="9" fill="none" stroke="#FBBC04" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-28" strokeLinecap="round" />
+                                <circle cx="12" cy="12" r="9" fill="none" stroke="#34A853" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-42" strokeLinecap="round" />
+                              </svg>
+                              <span className="thought-header-title">
+                                {msg.thoughtStatus || "Working on it — contacting agencies securely..."}
+                              </span>
+                            </div>
+                            <div className="thought-toggle-chevron">
+                              {thinkingExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                            </div>
                           </div>
 
                           {thinkingExpanded && (
-                            <div className="thought-steps-list">
-                              {msg.thoughtSteps.map((step, idx) => (
-                                <div key={idx} className="thought-step-item">
-                                  <span style={{ color: '#059669', fontWeight: 700 }}>✓</span>
-                                  <span>{step}</span>
-                                </div>
-                              ))}
+                            <div className="agent-stepper-timeline">
+                              {/* Vertical Connected Line */}
+                              <div className="agent-stepper-connector" />
+
+                              {msg.thoughtSteps.map((step, idx) => {
+                                const isDone = typeof step === 'object' ? step.isDone : true;
+                                const isLoading = typeof step === 'object' ? step.isLoading : false;
+                                const title = typeof step === 'object' ? step.title : step;
+                                const subtitle = typeof step === 'object' ? step.subtitle : 'Verified step';
+                                const iconType = typeof step === 'object' ? step.iconType : (idx === 0 ? 'fingerprint' : (idx === 1 ? 'database' : 'search'));
+                                const badgeText = typeof step === 'object' ? step.badgeText : (idx === 0 ? 'PHILSYS EVERIFY' : (idx === 1 ? 'SSS' : ''));
+
+                                return (
+                                  <div key={step.id || idx} className="agent-step-item">
+                                    {/* Step Node Icon Badge */}
+                                    <div className={`step-node-icon ${isLoading ? 'in-progress' : (isDone ? 'completed' : 'pending')}`}>
+                                      {iconType === 'fingerprint' && <Fingerprint size={16} />}
+                                      {iconType === 'database' && <Database size={15} />}
+                                      {iconType === 'search' && <Search size={15} />}
+                                      {!['fingerprint', 'database', 'search'].includes(iconType) && <ShieldCheck size={16} />}
+                                    </div>
+
+                                    {/* Step Title & Subtitle Info */}
+                                    <div className="step-info-col">
+                                      <div className="step-title-text">{title}</div>
+                                      <div className="step-subtitle-text">{subtitle}</div>
+                                    </div>
+
+                                    {/* Right Side Agency Badge & Status Indicator */}
+                                    <div className="step-status-right">
+                                      {badgeText && (
+                                        <span className="step-agency-badge">
+                                          <span className="step-agency-icon-dot" />
+                                          <span>{badgeText}</span>
+                                        </span>
+                                      )}
+
+                                      {isDone && (
+                                        <div className="step-status-check">
+                                          <Check size={11} strokeWidth={3.5} />
+                                        </div>
+                                      )}
+
+                                      {isLoading && (
+                                        <div className="step-half-spinner" />
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
                             </div>
                           )}
                         </div>
