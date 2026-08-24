@@ -177,7 +177,29 @@ function GcashGPassportIcon({ size = 36 }) {
 }
 
 export default function HomeScreen({ onLogout }) {
-  const [activeTab, setActiveTab] = useState('home'); // default to home screen after login
+  const [tabHistory, setTabHistory] = useState(['home']);
+  const activeTab = tabHistory[tabHistory.length - 1] || 'home';
+
+  const navigateTo = (newTab) => {
+    setTabHistory(prev => {
+      if (prev[prev.length - 1] === newTab) return prev;
+      return [...prev, newTab];
+    });
+  };
+
+  const navigateBack = () => {
+    setTabHistory(prev => {
+      if (prev.length <= 1) {
+        return ['home'];
+      }
+      return prev.slice(0, -1);
+    });
+  };
+
+  const resetToTab = (newTab) => {
+    setTabHistory([newTab]);
+  };
+
   const [showBalance, setShowBalance] = useState(true);
   const [showSuccessToast, setShowSuccessToast] = useState('');
   const [historyFilter, setHistoryFilter] = useState('all');
@@ -497,7 +519,7 @@ export default function HomeScreen({ onLogout }) {
                   type="button" 
                   className="home-service-item"
                   onClick={() => {
-                    setActiveTab('gchat');
+                    navigateTo('gchat');
                     triggerToast('Opening Gigi AI Copilot & Business Assistant...');
                   }}
                 >
@@ -520,7 +542,7 @@ export default function HomeScreen({ onLogout }) {
                   <button 
                     type="button" 
                     className="home-section-action-link"
-                    onClick={() => setActiveTab('passport')}
+                    onClick={() => navigateTo('passport')}
                   >
                     <span>View Passport</span>
                     <ChevronRight size={14} />
@@ -529,7 +551,7 @@ export default function HomeScreen({ onLogout }) {
 
                 <div 
                   className="home-passport-card"
-                  onClick={() => setActiveTab('passport')}
+                  onClick={() => navigateTo('passport')}
                 >
                   <div className="home-passport-header">
                     <div className="home-passport-biz-info">
@@ -561,7 +583,7 @@ export default function HomeScreen({ onLogout }) {
                   <button 
                     type="button" 
                     className="home-section-action-link"
-                    onClick={() => setActiveTab('health')}
+                    onClick={() => navigateTo('health')}
                   >
                     <span>Analytics</span>
                     <ChevronRight size={14} />
@@ -571,7 +593,7 @@ export default function HomeScreen({ onLogout }) {
                 <div className="home-metric-snapshot-grid">
                   <div 
                     className="home-metric-card"
-                    onClick={() => setActiveTab('health')}
+                    onClick={() => navigateTo('health')}
                   >
                     <div className="home-metric-card-top">
                       <span>Monthly Sales</span>
@@ -587,7 +609,7 @@ export default function HomeScreen({ onLogout }) {
 
                   <div 
                     className="home-metric-card"
-                    onClick={() => setActiveTab('health')}
+                    onClick={() => navigateTo('health')}
                   >
                     <div className="home-metric-card-top">
                       <span>Expenses</span>
@@ -610,7 +632,7 @@ export default function HomeScreen({ onLogout }) {
                   <button 
                     type="button" 
                     className="home-section-action-link"
-                    onClick={() => setActiveTab('history')}
+                    onClick={() => navigateTo('history')}
                   >
                     <span>Full History</span>
                     <ChevronRight size={14} />
@@ -620,7 +642,7 @@ export default function HomeScreen({ onLogout }) {
                 <div 
                   className="history-kpi-card"
                   style={{ margin: 0, cursor: 'pointer' }}
-                  onClick={() => setActiveTab('history')}
+                  onClick={() => navigateTo('history')}
                 >
                   <div className="kpi-col">
                     <span className="kpi-label">Inflow</span>
@@ -654,8 +676,8 @@ export default function HomeScreen({ onLogout }) {
               <button 
                 type="button" 
                 className="passport-back-btn" 
-                onClick={() => setActiveTab('home')}
-                title="Return to Home"
+                onClick={navigateBack}
+                title="Go Back"
               >
                 <ArrowLeft size={19} />
                 <img src={gcashPassportLogo} alt="GCash Passport" className="top-bar-gcash-passport-logo" />
@@ -852,8 +874,8 @@ export default function HomeScreen({ onLogout }) {
               <button 
                 type="button" 
                 className="passport-back-btn" 
-                onClick={() => setActiveTab('home')}
-                title="Return to Home"
+                onClick={navigateBack}
+                title="Go Back"
               >
                 <ArrowLeft size={19} />
                 <img src={gcashPassportLogo} alt="GCash Passport" className="top-bar-gcash-passport-logo" />
@@ -1047,7 +1069,7 @@ export default function HomeScreen({ onLogout }) {
             <div 
               className="passport-next-step-card"
               onClick={() => {
-                setActiveTab('activity');
+                navigateTo('activity');
                 triggerToast('Navigating to Today\'s Negosyo Activity...');
               }}
             >
@@ -1069,8 +1091,8 @@ export default function HomeScreen({ onLogout }) {
               <button 
                 type="button" 
                 className="passport-back-btn" 
-                onClick={() => setActiveTab('home')}
-                title="Return to Home"
+                onClick={navigateBack}
+                title="Go Back"
               >
                 <ArrowLeft size={19} />
                 <img src={gcashPassportLogo} alt="GCash Passport" className="top-bar-gcash-passport-logo" />
@@ -1221,8 +1243,8 @@ export default function HomeScreen({ onLogout }) {
               <button 
                 type="button" 
                 className="passport-back-btn" 
-                onClick={() => setActiveTab('home')}
-                title="Return to Home"
+                onClick={navigateBack}
+                title="Go Back"
               >
                 <ArrowLeft size={19} color="var(--gcash-blue)" />
                 <img src={gcashPassportLogo} alt="GCash Passport" className="home-passport-logo" />
@@ -1272,7 +1294,7 @@ export default function HomeScreen({ onLogout }) {
                   type="button" 
                   className="gchat-business-pill-btn"
                   onClick={() => {
-                    setActiveTab('passport');
+                    navigateTo('passport');
                     triggerToast('Navigating to Negosyo Passport...');
                   }}
                 >
@@ -1285,7 +1307,7 @@ export default function HomeScreen({ onLogout }) {
                   type="button" 
                   className="gchat-business-pill-btn"
                   onClick={() => {
-                    setActiveTab('history');
+                    navigateTo('history');
                     triggerToast('Navigating to Negosyo Activities...');
                   }}
                 >
@@ -1297,7 +1319,7 @@ export default function HomeScreen({ onLogout }) {
                   type="button" 
                   className="gchat-business-pill-btn"
                   onClick={() => {
-                    setActiveTab('health');
+                    navigateTo('health');
                     triggerToast('Navigating to Business Health Analytics...');
                   }}
                 >
@@ -1431,8 +1453,8 @@ export default function HomeScreen({ onLogout }) {
                 <button 
                   type="button" 
                   className="passport-back-btn" 
-                  onClick={() => setActiveTab('home')}
-                  title="Return to Home"
+                  onClick={navigateBack}
+                  title="Go Back"
                 >
                   <ArrowLeft size={19} />
                 </button>
@@ -1535,8 +1557,8 @@ export default function HomeScreen({ onLogout }) {
                 <button 
                   type="button" 
                   className="passport-back-btn" 
-                  onClick={() => setActiveTab('home')}
-                  title="Return to Home"
+                  onClick={navigateBack}
+                  title="Go Back"
                 >
                   <ArrowLeft size={19} />
                 </button>
@@ -1642,8 +1664,8 @@ export default function HomeScreen({ onLogout }) {
                 <button 
                   type="button" 
                   className="passport-back-btn" 
-                  onClick={() => setActiveTab('home')}
-                  title="Return to Home"
+                  onClick={navigateBack}
+                  title="Go Back"
                 >
                   <ArrowLeft size={19} />
                 </button>
@@ -1751,8 +1773,8 @@ export default function HomeScreen({ onLogout }) {
                 <button 
                   type="button" 
                   className="passport-back-btn" 
-                  onClick={() => setActiveTab('home')}
-                  title="Return to Home"
+                  onClick={navigateBack}
+                  title="Go Back"
                 >
                   <ArrowLeft size={19} />
                 </button>
@@ -1781,7 +1803,7 @@ export default function HomeScreen({ onLogout }) {
                 type="button" 
                 className="profile-menu-item"
                 onClick={() => {
-                  setActiveTab('passport');
+                  navigateTo('passport');
                   triggerToast('Opening Negosyo Passport...');
                 }}
               >
@@ -1799,7 +1821,7 @@ export default function HomeScreen({ onLogout }) {
                 type="button" 
                 className="profile-menu-item"
                 onClick={() => {
-                  setActiveTab('health');
+                  navigateTo('health');
                   triggerToast('Opening Business Health...');
                 }}
               >
@@ -1871,7 +1893,7 @@ export default function HomeScreen({ onLogout }) {
           <button
             type="button"
             className={`nav-tab-item ${activeTab === 'home' ? 'active' : ''}`}
-            onClick={() => setActiveTab('home')}
+            onClick={() => resetToTab('home')}
           >
             <div className="nav-icon-wrapper">
               <Home size={20} />
@@ -1883,7 +1905,7 @@ export default function HomeScreen({ onLogout }) {
           <button
             type="button"
             className={`nav-tab-item ${activeTab === 'inbox' ? 'active' : ''}`}
-            onClick={() => setActiveTab('inbox')}
+            onClick={() => resetToTab('inbox')}
           >
             <div className="nav-icon-wrapper">
               <Mail size={20} />
@@ -1896,7 +1918,7 @@ export default function HomeScreen({ onLogout }) {
           <button
             type="button"
             className={`nav-tab-item ${activeTab === 'qr' ? 'active' : ''}`}
-            onClick={() => setActiveTab('qr')}
+            onClick={() => resetToTab('qr')}
           >
             <div className="nav-icon-wrapper">
               <QrCode size={20} />
@@ -1908,7 +1930,7 @@ export default function HomeScreen({ onLogout }) {
           <button
             type="button"
             className={`nav-tab-item ${activeTab === 'cards' ? 'active' : ''}`}
-            onClick={() => setActiveTab('cards')}
+            onClick={() => resetToTab('cards')}
           >
             <div className="nav-icon-wrapper">
               <CreditCard size={20} />
@@ -1920,7 +1942,7 @@ export default function HomeScreen({ onLogout }) {
           <button
             type="button"
             className={`nav-tab-item ${activeTab === 'profile' ? 'active' : ''}`}
-            onClick={() => setActiveTab('profile')}
+            onClick={() => resetToTab('profile')}
           >
             <div className="nav-icon-wrapper">
               <User size={20} />
