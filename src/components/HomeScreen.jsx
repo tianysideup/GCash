@@ -255,10 +255,6 @@ export default function HomeScreen({ onLogout }) {
           isLoading: true
         }
       ],
-      hasAction: true,
-      actionTitle: "Pre-Approved Credit Boost",
-      actionDesc: "Increase your available loan line to ₱35,000 with 0 processing fee.",
-      actionBtn: "Activate ₱35,000 Credit Line",
       timestamp: '9:41 AM'
     }
   ]);
@@ -1528,25 +1524,6 @@ export default function HomeScreen({ onLogout }) {
                       {/* Main AI Bubble */}
                       <div className="ai-text-bubble">
                         {msg.text}
-
-                        {/* Interactive Agent Action Widget */}
-                        {msg.hasAction && (
-                          <div className="agent-action-box">
-                            <div className="action-box-title">
-                              <Sparkles size={14} color="#003E8A" />
-                              <span>{msg.actionTitle}</span>
-                            </div>
-                            <div className="action-box-desc">{msg.actionDesc}</div>
-                            <button 
-                              type="button" 
-                              className="btn-agent-execute"
-                              onClick={() => triggerToast('₱35,000.00 Credit Line Activated Successfully!')}
-                            >
-                              <Zap size={13} />
-                              <span>{msg.actionBtn}</span>
-                            </button>
-                          </div>
-                        )}
                       </div>
                     </>
                   )}
