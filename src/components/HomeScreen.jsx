@@ -200,6 +200,7 @@ export default function HomeScreen({ onLogout }) {
     setTabHistory([newTab]);
   };
 
+  const [walletHeaderTab, setWalletHeaderTab] = useState('wallet'); // 'wallet' | 'savings'
   const [showBalance, setShowBalance] = useState(true);
   const [showSuccessToast, setShowSuccessToast] = useState('');
   const [historyFilter, setHistoryFilter] = useState('all');
@@ -346,7 +347,7 @@ export default function HomeScreen({ onLogout }) {
     setTimeout(() => setShowSuccessToast(''), 3000);
   };
 
-  const rawBalance = 48750.50;
+  const rawBalance = 435.00;
   const formattedBalance = `₱${rawBalance.toLocaleString('en-PH', { minimumFractionDigits: 2 })}`;
 
 
@@ -408,21 +409,61 @@ export default function HomeScreen({ onLogout }) {
                 </div>
               </div>
 
-              {/* GCash Business Header Card */}
-              <div className="business-header-card">
-                <div className="business-card-top">
-                  <span className="business-card-title">GCash Business</span>
-                  <div className="business-tier-badge">
-                    <span>Verified Tier</span>
-                    <BadgeCheck size={14} />
-                  </div>
+              {/* Authentic GCash Wallet & Savings Tabbed Card */}
+              <div className="gcash-wallet-header-container">
+                <div className="gcash-wallet-tabs-row">
+                  <button 
+                    type="button" 
+                    className={`wallet-tab-btn wallet-tab ${walletHeaderTab === 'wallet' ? 'active' : ''}`}
+                    onClick={() => setWalletHeaderTab('wallet')}
+                  >
+                    Wallet
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`wallet-tab-btn savings-tab ${walletHeaderTab === 'savings' ? 'active' : ''}`}
+                    onClick={() => setWalletHeaderTab('savings')}
+                  >
+                    Savings
+                  </button>
                 </div>
 
-                <div className="business-card-body">
-                  <div className="business-credit-label">Available Loan Credit</div>
-                  <div className="business-credit-amount">
-                    <span className="current-credit">₱15,831.00</span>
-                    <span className="max-credit">/ ₱20,000</span>
+                <div className={`gcash-wallet-card-body ${walletHeaderTab === 'savings' ? 'savings-active' : ''}`}>
+                  <div className="wallet-balance-col">
+                    <div className="wallet-balance-label-row">
+                      <span className="wallet-balance-label">
+                        {walletHeaderTab === 'wallet' ? 'AVAILABLE BALANCE' : 'GSave BALANCE'}
+                      </span>
+                      <button 
+                        type="button" 
+                        className="wallet-eye-toggle"
+                        onClick={() => setShowBalance(!showBalance)}
+                        title={showBalance ? "Hide balance" : "Show balance"}
+                      >
+                        {showBalance ? <Eye size={14} /> : <EyeOff size={14} />}
+                      </button>
+                    </div>
+
+                    <div className="wallet-balance-amount">
+                      {showBalance ? (
+                        <>
+                          <span className="wallet-peso-sign">₱</span>
+                          <span>{walletHeaderTab === 'wallet' ? '435.00' : '12,500.00'}</span>
+                        </>
+                      ) : (
+                        <span className="wallet-masked-dots">₱ ••••••</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="wallet-card-right">
+                    <button 
+                      type="button" 
+                      className="btn-cash-in-pill"
+                      onClick={() => triggerToast(walletHeaderTab === 'wallet' ? 'Cash In: 7-Eleven, BPI, UnionBank & touchpay ready' : 'GSave: Deposit funds to CIMB Bank')}
+                    >
+                      {walletHeaderTab === 'wallet' ? '+ Cash In' : '+ Deposit'}
+                    </button>
                   </div>
                 </div>
               </div>

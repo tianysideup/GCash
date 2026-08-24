@@ -702,6 +702,162 @@ body {
   border: 1.5px solid #005CEE;
 }
 
+/* Authentic GCash Wallet & Savings Header Card */
+.gcash-wallet-header-container {
+  width: 100%;
+  margin: 4px 0px 14px;
+}
+
+.gcash-wallet-tabs-row {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.wallet-tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.wallet-tab-btn.wallet-tab {
+  border-top-left-radius: 18px;
+  border-top-right-radius: 6px;
+}
+
+.wallet-tab-btn.savings-tab {
+  border-top-right-radius: 18px;
+  border-top-left-radius: 6px;
+}
+
+.wallet-tab-btn.active {
+  background: var(--gcash-blue);
+  color: #FFFFFF;
+}
+
+.wallet-tab-btn:not(.active) {
+  background: #FFFFFF;
+  color: var(--gcash-blue);
+  box-shadow: inset 0 -2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.gcash-wallet-card-body {
+  background: var(--gcash-blue);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 18px 20px 20px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 92, 238, 0.28);
+  transition: border-radius 0.2s ease;
+}
+
+.gcash-wallet-card-body.savings-active {
+  border-top-right-radius: 0;
+  border-top-left-radius: 20px;
+}
+
+.wallet-balance-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wallet-balance-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wallet-balance-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.88);
+  text-transform: uppercase;
+}
+
+.wallet-eye-toggle {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.wallet-eye-toggle:hover {
+  opacity: 0.75;
+}
+
+.wallet-balance-amount {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  letter-spacing: -0.02em;
+}
+
+.wallet-peso-sign {
+  font-size: 22px;
+  font-weight: 800;
+  margin-right: 2px;
+}
+
+.wallet-masked-dots {
+  font-size: 24px;
+  letter-spacing: 2.5px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.btn-cash-in-pill {
+  background: #FFFFFF;
+  color: var(--gcash-blue);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-cash-in-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  background: #F8FAFC;
+}
+
+.btn-cash-in-pill:active {
+  transform: translateY(0);
+}
+
 .business-header-card {
   background: var(--gcash-blue); /* Solid GCash blue */
   border-radius: 22px;
