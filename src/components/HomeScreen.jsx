@@ -227,30 +227,30 @@ export default function HomeScreen({ onLogout }) {
       sender: 'ai',
       text: "Great news! Based on your consistent daily turnover (₱6,300 today) and 100% on-time supplier settlements, you are pre-qualified for an instant credit upgrade from ₱20,000 to ₱35,000.",
       hasThought: true,
-      thoughtStatus: "Working on it — contacting agencies securely...",
+      thoughtStatus: "Working on it — querying GCash Business & GLoan rails securely...",
       thoughtSteps: [
         {
           id: 'step-1',
-          iconType: 'fingerprint',
-          title: 'Verifying your identity',
-          subtitle: 'Identity confirmed • member matched',
-          badgeText: 'PHILSYS EVERIFY',
+          iconType: 'shield',
+          title: 'Verifying GCash Merchant Identity',
+          subtitle: 'Carla’s Fresh Seafood • Level 2 Verified SME',
+          badgeText: 'GCASH PASSPORT',
           isDone: true
         },
         {
           id: 'step-2',
           iconType: 'database',
-          title: 'Connecting to your member records',
-          subtitle: 'Member 34-2258901-5 • Active',
-          badgeText: 'SSS',
+          title: 'Connecting to GCash Business Ledger',
+          subtitle: '₱6,300 gross sales • 100% on-time supplier settlements',
+          badgeText: 'GCASH BUSINESS',
           isDone: true
         },
         {
           id: 'step-3',
           iconType: 'search',
-          title: 'Reading employer contribution postings',
-          subtitle: 'Working...',
-          badgeText: 'SSS',
+          title: 'Analyzing GLoan Credit Limit & Eligibility',
+          subtitle: 'Calculating pre-approved ceiling upgrade to ₱35,000...',
+          badgeText: 'GLOAN ENGINE',
           isDone: false,
           isLoading: true
         }
@@ -282,21 +282,21 @@ export default function HomeScreen({ onLogout }) {
         sender: 'ai',
         text: `I've analyzed "${currentInput}". Your Negosyo Passport has been updated and the action has been scheduled automatically.`,
         hasThought: true,
-        thoughtStatus: "Working on it — connecting to business ledger securely...",
+        thoughtStatus: "Working on it — synchronizing GCash Business ledger...",
         thoughtSteps: [
           {
             id: 's-1',
-            iconType: 'fingerprint',
+            iconType: 'shield',
             title: 'Verifying merchant authorization',
             subtitle: 'Identity confirmed • GNP-2026-8891 matched',
-            badgeText: 'PHILSYS EVERIFY',
+            badgeText: 'GCASH PASSPORT',
             isDone: true
           },
           {
             id: 's-2',
             iconType: 'database',
             title: 'Connecting to real-time sales ledger',
-            subtitle: '₱6,300 gross turnover • 100% verified',
+            subtitle: '₱6,300 gross turnover • BSP Compliant',
             badgeText: 'GCASH BUSINESS',
             isDone: true
           },
@@ -304,7 +304,7 @@ export default function HomeScreen({ onLogout }) {
             id: 's-3',
             iconType: 'search',
             title: 'Optimizing Negosyo credit profile',
-            subtitle: 'Credit line boost calculated & approved',
+            subtitle: 'GLoan boost ceiling approved: ₱35,000.00',
             badgeText: 'GLOAN ENGINE',
             isDone: true
           }
@@ -1445,15 +1445,22 @@ export default function HomeScreen({ onLogout }) {
                             onClick={() => setThinkingExpanded(!thinkingExpanded)}
                           >
                             <div className="thought-header-left">
-                              {/* Multi-color circular ring loader */}
-                              <svg width="20" height="20" viewBox="0 0 24 24" className="agentic-spinner-ring">
-                                <circle cx="12" cy="12" r="9" fill="none" stroke="#4285F4" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="0" strokeLinecap="round" />
-                                <circle cx="12" cy="12" r="9" fill="none" stroke="#EA4335" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-14" strokeLinecap="round" />
-                                <circle cx="12" cy="12" r="9" fill="none" stroke="#FBBC04" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-28" strokeLinecap="round" />
-                                <circle cx="12" cy="12" r="9" fill="none" stroke="#34A853" strokeWidth="3" strokeDasharray="14 42" strokeDashoffset="-42" strokeLinecap="round" />
-                              </svg>
+                              {/* Authentic GCash Animated Brand Logo / Spinner */}
+                              <div className="gcash-agentic-logo-badge">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="10" stroke="url(#gcashAgenticGrad)" strokeWidth="2.5" strokeDasharray="36 18" className="agentic-spinner-ring" />
+                                  <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.3 17 16.2 15.4 16.8 13.3H12V10.8H19.3C19.4 11.2 19.5 11.6 19.5 12C19.5 16.14 16.14 19.5 12 19.5C7.86 19.5 4.5 16.14 4.5 12C4.5 7.86 7.86 4.5 12 4.5C14.1 4.5 16 5.35 17.4 6.75L15.6 8.55C14.7 7.6 13.4 7 12 7Z" fill="#005CEE" />
+                                  <defs>
+                                    <linearGradient id="gcashAgenticGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                                      <stop stopColor="#005CEE" />
+                                      <stop offset="0.5" stopColor="#00D2FF" />
+                                      <stop offset="1" stopColor="#005CEE" />
+                                    </linearGradient>
+                                  </defs>
+                                </svg>
+                              </div>
                               <span className="thought-header-title">
-                                {msg.thoughtStatus || "Working on it — contacting agencies securely..."}
+                                {msg.thoughtStatus || "Working on it — querying GCash Business & GLoan rails securely..."}
                               </span>
                             </div>
                             <div className="thought-toggle-chevron">
@@ -1471,17 +1478,18 @@ export default function HomeScreen({ onLogout }) {
                                 const isLoading = typeof step === 'object' ? step.isLoading : false;
                                 const title = typeof step === 'object' ? step.title : step;
                                 const subtitle = typeof step === 'object' ? step.subtitle : 'Verified step';
-                                const iconType = typeof step === 'object' ? step.iconType : (idx === 0 ? 'fingerprint' : (idx === 1 ? 'database' : 'search'));
-                                const badgeText = typeof step === 'object' ? step.badgeText : (idx === 0 ? 'PHILSYS EVERIFY' : (idx === 1 ? 'SSS' : ''));
+                                const iconType = typeof step === 'object' ? step.iconType : (idx === 0 ? 'shield' : (idx === 1 ? 'database' : 'search'));
+                                const badgeText = typeof step === 'object' ? step.badgeText : (idx === 0 ? 'GCASH PASSPORT' : (idx === 1 ? 'GCASH BUSINESS' : 'GLOAN ENGINE'));
 
                                 return (
                                   <div key={step.id || idx} className="agent-step-item">
                                     {/* Step Node Icon Badge */}
                                     <div className={`step-node-icon ${isLoading ? 'in-progress' : (isDone ? 'completed' : 'pending')}`}>
+                                      {iconType === 'shield' && <ShieldCheck size={16} />}
                                       {iconType === 'fingerprint' && <Fingerprint size={16} />}
                                       {iconType === 'database' && <Database size={15} />}
                                       {iconType === 'search' && <Search size={15} />}
-                                      {!['fingerprint', 'database', 'search'].includes(iconType) && <ShieldCheck size={16} />}
+                                      {!['shield', 'fingerprint', 'database', 'search'].includes(iconType) && <ShieldCheck size={16} />}
                                     </div>
 
                                     {/* Step Title & Subtitle Info */}
